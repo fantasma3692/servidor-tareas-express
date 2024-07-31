@@ -4,6 +4,7 @@ const taskRoutes = require("./routes/taskRoutes");
 const dotenv = require("dotenv");
 const errorHandler = require("./middleware/errorHandler");
 const { default: helmet } = require("helmet");
+const setupSwaggerDocs = require('./swagger');
 
 dotenv.config();
 const app = express();
@@ -14,7 +15,8 @@ app.use(helmet());//Use Helmet!
 app.use(bodyParser.json());
 app.use("/tasks", taskRoutes);//asignacion de rutas
 app.use(errorHandler)//controlador de errores
-
+// Configurar Swagger
+setupSwaggerDocs(app);
 app.listen(PORT, () => {
   console.log(`Servidor activo en el puerto ${PORT}`);
 });
