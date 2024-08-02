@@ -26,8 +26,6 @@ const validateParamTaskId = [
     .toInt(),
 ];
 
-
-
 /**
  * @swagger
  * /tasks:
@@ -44,6 +42,8 @@ const validateParamTaskId = [
  *                 $ref: '#/components/schemas/Task'
  */
 router.get("/", taskController.getTasks);
+
+
 /**
  * @swagger
  * /tasks/{id}:
@@ -58,15 +58,18 @@ router.get("/", taskController.getTasks);
  *         description: ID de la tarea
  *     responses:
  *       200:
- *         description: Tarea obtenida por ID
+ *         description: Lista de todas las tareas
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Task'
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
  *       404:
  *         description: Tarea no encontrada
  */
 router.get("/:id", validateParamTaskId, taskController.getTaskById);
+
 
 /**
  * @swagger
@@ -80,21 +83,24 @@ router.get("/:id", validateParamTaskId, taskController.getTaskById);
  *           schema:
  *             $ref: '#/components/schemas/Task'
  *     responses:
- *       201:
- *         description: Tarea creada exitosamente
+ *       200:
+ *         description: Lista de todas las tareas
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Task'
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
  *       400:
  *         description: Error de validación
  */
 router.post("/", validateBodyTask, taskController.createTask);
 
 
+
 /**
  * @swagger
- * /tasks/{id}:
+ * /tasks:
  *   put:
  *     summary: Actualiza una tarea existente
  *     parameters:
@@ -112,22 +118,24 @@ router.post("/", validateBodyTask, taskController.createTask);
  *             $ref: '#/components/schemas/Task'
  *     responses:
  *       200:
- *         description: Tarea actualizada exitosamente
+ *         description: Lista de todas las tareas
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Task'
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Task'
  *       404:
  *         description: Tarea no encontrada
  *       400:
  *         description: Error de validación
  */
-
 router.put(
   "/:id",
   validateParamTaskId.concat(validateBodyTask),
   taskController.updateTask
 );
+
 
 /**
  * @swagger
